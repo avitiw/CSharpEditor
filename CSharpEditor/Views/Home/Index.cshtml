@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>C# Code Editor</h1>    
+</div>
+
+ <div class="row">
+    <p>Write a C# program to sum all positive numbers from a list of numbers.</p>
+     <p>Your program should have Main method and read the input from a file.</p>
+     <p>File name will be passed into the program as first argument.</p>
+     <p>File contents will be list of numbers separated by space</p>
+     <code>1 2 -4 5 6</code>
+ </div>
+<br />
+<div id="editor">
+    /*
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.IO;
+    
+    namespace Given
+    {
+        public class Program 
+        {
+            public static void Main1(string[] args)
+            {
+             
+                using (StreamReader reader = File.OpenText(args[0]))
+                    while (!reader.EndOfStream)
+                    {
+                        string line = reader.ReadLine();
+                        if (null == line)
+                        continue;
+                        // do something with line 
+                    } 
+            }
+        }
+    }
+    */
+</div>
+<div class="row">
+    <div class="col-md-2 btn btn-primary" id="compile"> Compile</div>
+</div>
+<div class="row">
+    <div id="errorMsg"></div>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
+ @section scripts{
+
+ <script>
+    $(function () {
+        ace.require("ace/ext/language_tools");
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/xcode");
+        editor.getSession().setMode("ace/mode/csharp");
+        editor.setOptions({
+            enableBasicAutocompletion: true
+        });
+
+        $("#compile").on('click', function () {
+            var code = editor.getSession().getValue();
+            $.post('/Home/Compile', { 'data': code }, function (data) {
+                $('#errorMsg').html(data);
+            }).done(function () {
+                console.log('done');
+            });
+        });
+    });
+    
+</script>
+}

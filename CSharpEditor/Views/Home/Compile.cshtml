@@ -1,0 +1,28 @@
+﻿@model CSharpEditor.Models.CompileResult
+ 
+
+@{
+    Layout = null;
+}
+<div>
+    @if(Model.Success){
+    <h4>Compilation succeeded</h4>    
+    }
+    else
+    {
+        <h4>Compilation failed</h4>
+    }
+    
+	<hr />
+     
+    @if (Model.Messages.Count > 0)
+{
+    <ul class="list-unstyled">
+        @foreach (var msg in Model.Messages)
+        {
+            <li>@msg</li>
+        }
+    </ul>
+}
+</div>
+ 
